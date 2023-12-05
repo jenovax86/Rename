@@ -41,6 +41,5 @@ func rename(oldPath string, newPath string) {
 
 func main() {
 	rename(os.Args[1], os.Args[2])
-	fmt.Println(os.Args)
 }
 
