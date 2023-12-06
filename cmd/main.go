@@ -1,18 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
 
-func doesFileExist(fileName string) {
-	_, err := os.Stat(fileName)
-
-	if os.IsNotExist(err) {
-		fmt.Printf("%v file does not exits\n", fileName)
+func doesFileExist(fileName string) bool {
+	if _, err := os.Stat(fileName); os.IsNotExist(err) {
+		return false
 	}
-	return
+	return true
 }
 
 func validateFile(fileName string) bool {
@@ -20,18 +17,20 @@ func validateFile(fileName string) bool {
 
 	for i := 0; i < len(fileName); i++ {
 		if strings.ContainsRune(fileName, linuxBlackList[i]) {
-			return true
+			return false
 		}
 	}
 
-	return false
+	return true
 }
 
 func rename(oldPath string, newPath string) {
-	if validateFile(newPath) == true {
+	if !validateFile(newPath) || !validateFile(newPath) {
 		panic("This type of character is not allowed when naming a file")
 	}
-	doesFileExist(oldPath)
+	if !doesFileExist(oldPath) {
+		panic("File does not exits")
+	}
 
 	renameFile := os.Rename(oldPath, newPath)
 	if renameFile != nil {
@@ -40,6 +39,10 @@ func rename(oldPath string, newPath string) {
 }
 
 func main() {
+	args := os.Args
+
+	if len(args) < 3 {
+		return
+	}
 	rename(os.Args[1], os.Args[2])
 }
-
