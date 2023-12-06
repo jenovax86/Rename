@@ -18,7 +18,7 @@ build_mac:
  
 build_linux: 
 	@echo "Compiling for [${COLOR_GREEN}Linux${COLOR_RESET}] (${COLOR_YELLOW}x86-64${COLOR_RESET})"
-	env GOOS=linux GOARCH=amd64 go build -v -o ${BUILD_DIR}/${BINARY}_linux_x86-64 ${MAIN_PATH}
+	env GOOS=linux GOARCH=amd64 go build -o ${BUILD_DIR}/${BINARY}_linux_x86-64 ${MAIN_PATH}
 
 	@echo "Compiling for [${COLOR_GREEN}Linux${COLOR_RESET}] (${COLOR_YELLOW}ARM64${COLOR_RESET})"
 	env GOOS=linux GOARCH=arm64 go build -o ${BUILD_DIR}/${BINARY}_linux_arm64 ${MAIN_PATH}
